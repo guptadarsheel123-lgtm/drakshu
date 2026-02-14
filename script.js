@@ -40,12 +40,24 @@ const PERSONALIZATION = {
         answers: ["Being together", "Perfect plans", "Expensive gifts"],
         correctIndex: 0,
       },
+      {
+        prompt: "Our ideal Sunday is:",
+        answers: ["Chilling together", "Separate errands", "Work all day"],
+        correctIndex: 0,
+      },
+      {
+        prompt: "What makes us strongest?",
+        answers: ["Trust + communication", "Luck", "Only grand gestures"],
+        correctIndex: 0,
+      },
     ],
     messagesByScore: {
-      0: "Okay this is cute chaos 😂 We need a rematch.",
-      1: "1/3 — warm-up round, you're still my favorite 💗",
-      2: "2/3 — almost perfect! You know us really well 💞",
-      3: "3/3 — perfect score! Soulmate-level answering 💖",
+      0: "0/5 — goofy start 😂 rematch time.",
+      1: "1/5 — warm-up round, still adorable 💗",
+      2: "2/5 — getting there, cute effort 💞",
+      3: "3/5 — solid score, you know us well ✨",
+      4: "4/5 — almost perfect, amazing 💖",
+      5: "5/5 — perfect score! soulmate-level answers 🏆💘",
     },
   },
   countdown: {
@@ -158,7 +170,7 @@ function setupReasons() {
   renderReason();
 }
 
-function setupMapAndQuiz() {
+function setupMap() {
   const map = document.getElementById("map-pins");
   const popup = document.getElementById("memory-popup");
 
@@ -172,7 +184,9 @@ function setupMapAndQuiz() {
     });
     map.appendChild(pin);
   });
+}
 
+function setupQuiz() {
   const form = document.getElementById("quiz-form");
   const result = document.getElementById("quiz-result");
   const feedback = document.getElementById("quiz-feedback");
@@ -260,10 +274,14 @@ function setupCountdownAndFinal() {
 
   noBtn.addEventListener("mouseenter", dodgeNo);
   noBtn.addEventListener("focus", dodgeNo);
-  noBtn.addEventListener("touchstart", (event) => {
-    event.preventDefault();
-    dodgeNo();
-  }, { passive: false });
+  noBtn.addEventListener(
+    "touchstart",
+    (event) => {
+      event.preventDefault();
+      dodgeNo();
+    },
+    { passive: false },
+  );
 
   yesBtn.addEventListener("click", () => {
     finalMessage.textContent = PERSONALIZATION.finalSection.yesMessage;
@@ -274,7 +292,9 @@ renderStaticContent();
 setupSlideDeck();
 setupLetterReveal();
 setupReasons();
-setupMapAndQuiz();
+setupMap();
+setupQuiz();
 setupCountdownAndFinal();
+
 
 
