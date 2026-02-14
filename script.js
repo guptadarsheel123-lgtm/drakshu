@@ -26,48 +26,47 @@ const PERSONALIZATION = {
   quiz: {
     questions: [
       {
-        prompt: "Our best date vibe?",
-        answers: ["Long talks + comfort food", "Fancy place", "Anywhere together"],
-        correctIndex: 0,
+        prompt: "What was ur first text to me?",
+        answers: ["darsheel", "listen to me", "listen to me darsheel", "darsheel listen to me"],
+        correctIndex: 2,
       },
       {
-        prompt: "Pick our couple emoji:",
+        prompt: "What was the date that u texted me for the first time?",
         answers: ["💞", "😂", "🌹"],
         correctIndex: 0,
       },
       {
-        prompt: "What matters most to us?",
+        prompt: "When was the first time we met?",
         answers: ["Being together", "Perfect plans", "Expensive gifts"],
         correctIndex: 0,
       },
       {
-        prompt: "Our ideal Sunday is:",
+        prompt: "Which car did we have the first drive in?",
         answers: ["Chilling together", "Separate errands", "Work all day"],
         correctIndex: 0,
       },
       {
-        prompt: "What makes us strongest?",
+        prompt: "",
         answers: ["Trust + communication", "Luck", "Only grand gestures"],
         correctIndex: 0,
       },
     ],
     messagesByScore: {
-      0: "0/5 — goofy start 😂 rematch time.",
-      1: "1/5 — warm-up round, still adorable 💗",
-      2: "2/5 — getting there, cute effort 💞",
-      3: "3/5 — solid score, you know us well ✨",
-      4: "4/5 — almost perfect, amazing 💖",
-      5: "5/5 — perfect score! soulmate-level answers 🏆💘",
+      0: "0/5 — do u hate me?",
+      1: "1/5 — someone's got alzheimer",
+      2: "2/5 — not too bad, expected better :(",
+      3: "3/5 — decent hai, needs improvement",
+      4: "4/5 — kya baaat haii, almost there",
+      5: "5/5 — wowowowoowowow, congratulations, you get 3 wishes",
     },
   },
   countdown: {
-    targetDate: "2027-02-14T00:00:00",
-    helperText: "Edit PERSONALIZATION.countdown.targetDate in script.js",
+    targetDate: "2026-03-22T12:00:00",
     finishedText: "It's today! Surprise time 💝",
   },
   finalSection: {
-    question: "Will u be my valentine? 💘",
-    yesMessage: "YAYYY 💖 Best answer. I love you forever.",
+    question: "Will you be my valentine? 💘 (Try saying no)",
+    yesMessage: "YAYYY I love youuuuu sooo much, meri jaan, meri cutu, meri drakshuuuuu",
   },
 };
 
