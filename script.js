@@ -1,152 +1,146 @@
 const PERSONALIZATION = {
   hero: {
-    title: "For My Favorite Person 💌",
-    subtitle:
-      "A tiny website for us — our story, our little memories, and one big question at the end.",
+    title: "Our Little Love Presentation 💌",
+    subtitle: "Use next/previous like a PPT. I made this just for you.",
   },
   timeline: [
-    {
-      title: "First Conversation",
-      text: "The moment we started talking and everything got brighter.",
-    },
-    {
-      title: "First Date",
-      text: "Nervous smiles, laughs, and that instant feeling of ‘this is special.’",
-    },
-    {
-      title: "Favorite Trip",
-      text: "New places, silly photos, and memories I still replay all the time.",
-    },
-    {
-      title: "Today",
-      text: "Still choosing you every day — and still very in love with you.",
-    },
+    { title: "First Conversation", text: "The day everything started." },
+    { title: "First Date", text: "Nervous smiles and nonstop laughs." },
+    { title: "Favorite Memory", text: "That day we never wanted to end." },
+    { title: "Today", text: "Still my favorite person, always." },
   ],
   letterText:
-    "Every day with you feels like my favorite part of life. Thank you for your laugh, your kindness, and for making ordinary moments feel magical. I love you more than words can say.",
+    "You make life warmer, brighter, and better. Thank you for being my peace, my laughter, and my best memory every day.",
   reasons: [
-    "You make me feel safe, seen, and loved.",
-    "Your smile can fix even my toughest day.",
-    "You believe in me when I overthink.",
-    "You are beautiful inside and out.",
-    "Life is better, softer, and happier with you.",
+    "You make me feel understood.",
+    "Your smile resets my whole day.",
+    "You are kind in the little things.",
+    "I love how we laugh together.",
+    "You feel like home.",
   ],
   mapMemories: [
-    {
-      label: "☕ First Coffee Spot",
-      note: "The day we sat forever talking and forgot the time.",
-    },
-    {
-      label: "🌳 Sunset Park Walk",
-      note: "That golden-hour walk where we laughed nonstop.",
-    },
-    {
-      label: "🌊 Beach Day",
-      note: "Windy hair, warm hands, and a perfect sky.",
-    },
-    {
-      label: "🎬 Cozy Movie Night",
-      note: "One popcorn, two straws, and your shoulder as my pillow.",
-    },
+    { label: "☕ First Coffee", note: "We talked so much we lost track of time." },
+    { label: "🌇 Evening Walk", note: "Perfect sky, perfect company." },
+    { label: "🎬 Movie Night", note: "Shared snacks, shared hoodie, shared smiles." },
   ],
   quiz: {
     questions: [
       {
-        prompt: "What is our ideal date vibe?",
+        prompt: "Our best date vibe?",
         answers: [
-          { label: "Food + long talks", points: 2 },
-          { label: "Fancy restaurant", points: 1 },
-          { label: "Anywhere as long as we're together", points: 3 },
+          { label: "Long talks + comfort food", points: 3 },
+          { label: "Fancy place", points: 1 },
+          { label: "Anywhere together", points: 2 },
         ],
       },
       {
-        prompt: "Which emoji feels most like us?",
+        prompt: "Pick our couple emoji:",
         answers: [
-          { label: "💕", points: 2 },
-          { label: "😂", points: 3 },
+          { label: "💞", points: 3 },
+          { label: "😂", points: 2 },
           { label: "🌹", points: 1 },
         ],
       },
     ],
-    highScoreMessage:
-      "Perfect score — you know us too well. Our love language is laughter + comfort 💞",
-    lowScoreMessage:
-      "No matter the score, we still win because we have each other 💗",
+    highScoreMessage: "A+ girlfriend energy. You know us perfectly 💖",
+    lowScoreMessage: "No score matters. We still win because it's us 💗",
   },
   countdown: {
     targetDate: "2027-02-14T00:00:00",
-    helperText: "Set PERSONALIZATION.countdown.targetDate in script.js.",
-    finishedText: "It's today! Surprise unlocked 💝",
+    helperText: "Edit PERSONALIZATION.countdown.targetDate in script.js",
+    finishedText: "It's today! Surprise time 💝",
   },
   finalSection: {
     question: "Will u be my valentine? 💘",
-    yesMessage:
-      "YAY! 💖 Best answer ever. I can't wait for all the memories still coming.",
+    yesMessage: "YAYYY 💖 You just made this the best slide ever.",
   },
 };
 
-function renderHero() {
+function renderStaticContent() {
   document.getElementById("hero-title").textContent = PERSONALIZATION.hero.title;
-  document.getElementById("hero-subtitle").textContent =
-    PERSONALIZATION.hero.subtitle;
-}
+  document.getElementById("hero-subtitle").textContent = PERSONALIZATION.hero.subtitle;
+  document.getElementById("final-question").textContent = PERSONALIZATION.finalSection.question;
+  document.getElementById("countdown-note").textContent = PERSONALIZATION.countdown.helperText;
 
-function renderTimeline() {
   const timelineList = document.getElementById("timeline-list");
   timelineList.innerHTML = PERSONALIZATION.timeline
-    .map(
-      (item) =>
-        `<article><h3>${item.title}</h3><p>${item.text}</p></article>`,
-    )
+    .map((item) => `<article><h3>${item.title}</h3><p>${item.text}</p></article>`)
     .join("");
 }
 
-function setupTypewriter() {
-  const letterText = PERSONALIZATION.letterText;
-  const typewriterEl = document.getElementById("typewriter");
+function setupSlideDeck() {
+  const slides = [...document.querySelectorAll("[data-slide]")];
+  const dotsEl = document.getElementById("dots");
+  const counter = document.getElementById("slide-counter");
+  const progress = document.getElementById("progress-bar");
+  let index = 0;
 
-  function runTypewriter() {
-    typewriterEl.textContent = "";
-    let i = 0;
-    const timer = setInterval(() => {
-      typewriterEl.textContent += letterText[i];
-      i += 1;
-      if (i >= letterText.length) clearInterval(timer);
-    }, 24);
+  slides.forEach((_slide, i) => {
+    const dot = document.createElement("button");
+    dot.className = "dot";
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+    dot.addEventListener("click", () => showSlide(i));
+    dotsEl.appendChild(dot);
+  });
+
+  function showSlide(next) {
+    index = (next + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle("active", i === index));
+    [...dotsEl.children].forEach((d, i) => d.classList.toggle("active", i === index));
+    counter.textContent = `Slide ${index + 1} / ${slides.length}`;
+    progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+    if (index === 2) runTypewriter();
   }
 
-  document.getElementById("replay-letter").addEventListener("click", runTypewriter);
-  runTypewriter();
+  document.getElementById("next-slide").addEventListener("click", () => showSlide(index + 1));
+  document.getElementById("prev-slide").addEventListener("click", () => showSlide(index - 1));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") showSlide(index + 1);
+    if (event.key === "ArrowLeft") showSlide(index - 1);
+  });
+
+  showSlide(0);
 }
 
-function setupReasonsDeck() {
-  const reasons = PERSONALIZATION.reasons;
-  const reasonTitle = document.getElementById("reason-title");
-  const reasonText = document.getElementById("reason-text");
+let typewriterTimer;
+function runTypewriter() {
+  const text = PERSONALIZATION.letterText;
+  const el = document.getElementById("typewriter");
+  clearInterval(typewriterTimer);
+  el.textContent = "";
+  let i = 0;
+  typewriterTimer = setInterval(() => {
+    el.textContent += text[i] || "";
+    i += 1;
+    if (i >= text.length) clearInterval(typewriterTimer);
+  }, 22);
+}
+
+function setupReasons() {
+  const title = document.getElementById("reason-title");
+  const text = document.getElementById("reason-text");
   let reasonIndex = 0;
 
-  function renderReason() {
-    reasonTitle.textContent = `Reason #${reasonIndex + 1}`;
-    reasonText.textContent = reasons[reasonIndex];
-  }
+  const renderReason = () => {
+    title.textContent = `Reason #${reasonIndex + 1}`;
+    text.textContent = PERSONALIZATION.reasons[reasonIndex];
+  };
 
   document.getElementById("prev-reason").addEventListener("click", () => {
-    reasonIndex = (reasonIndex - 1 + reasons.length) % reasons.length;
+    reasonIndex = (reasonIndex - 1 + PERSONALIZATION.reasons.length) % PERSONALIZATION.reasons.length;
     renderReason();
   });
-
   document.getElementById("next-reason").addEventListener("click", () => {
-    reasonIndex = (reasonIndex + 1) % reasons.length;
+    reasonIndex = (reasonIndex + 1) % PERSONALIZATION.reasons.length;
     renderReason();
   });
-
   renderReason();
 }
 
-function setupMapMemories() {
-  const pinsContainer = document.getElementById("map-pins");
+function setupMapAndQuiz() {
+  const map = document.getElementById("map-pins");
   const popup = document.getElementById("memory-popup");
-
   PERSONALIZATION.mapMemories.forEach((memory) => {
     const pin = document.createElement("button");
     pin.className = "pin";
@@ -154,93 +148,76 @@ function setupMapMemories() {
     pin.textContent = memory.label;
     pin.addEventListener("click", () => {
       popup.innerHTML = `<h3>${memory.label}</h3><p>${memory.note}</p>`;
+      popup.animate([{ transform: "scale(0.98)" }, { transform: "scale(1)" }], { duration: 160 });
     });
-    pinsContainer.appendChild(pin);
+    map.appendChild(pin);
   });
-}
 
-function setupQuiz() {
-  const quizForm = document.getElementById("quiz-form");
-  const quizResult = document.getElementById("quiz-result");
-
+  const form = document.getElementById("quiz-form");
+  const result = document.getElementById("quiz-result");
   PERSONALIZATION.quiz.questions.forEach((question, questionIndex) => {
     const fieldset = document.createElement("fieldset");
-    const legend = document.createElement("legend");
-    legend.textContent = question.prompt;
-    fieldset.appendChild(legend);
-
+    fieldset.innerHTML = `<legend>${question.prompt}</legend>`;
     question.answers.forEach((answer) => {
       const label = document.createElement("label");
-      label.innerHTML = `<input type="radio" name="q${questionIndex}" value="${answer.points}" required /> ${answer.label}`;
+      label.innerHTML = `<input required type="radio" name="q${questionIndex}" value="${answer.points}"> ${answer.label}`;
       fieldset.appendChild(label);
     });
-
-    quizForm.appendChild(fieldset);
+    form.appendChild(fieldset);
   });
 
   const submit = document.createElement("button");
-  submit.type = "submit";
   submit.className = "btn";
-  submit.textContent = "See Result";
-  quizForm.appendChild(submit);
+  submit.type = "submit";
+  submit.textContent = "Check Score";
+  form.appendChild(submit);
 
-  quizForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const data = new FormData(quizForm);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
     const score = PERSONALIZATION.quiz.questions.reduce(
-      (sum, _question, questionIndex) => sum + Number(data.get(`q${questionIndex}`)),
+      (sum, _q, i) => sum + Number(data.get(`q${i}`)),
       0,
     );
-
-    if (score >= PERSONALIZATION.quiz.questions.length * 2 + 1) {
-      quizResult.textContent = PERSONALIZATION.quiz.highScoreMessage;
-    } else {
-      quizResult.textContent = PERSONALIZATION.quiz.lowScoreMessage;
-    }
+    result.textContent =
+      score >= PERSONALIZATION.quiz.questions.length * 2.5
+        ? PERSONALIZATION.quiz.highScoreMessage
+        : PERSONALIZATION.quiz.lowScoreMessage;
   });
 }
 
-function setupCountdown() {
-  const countdownTarget = new Date(PERSONALIZATION.countdown.targetDate);
-  const countdownText = document.getElementById("countdown-text");
-  document.getElementById("countdown-note").textContent =
-    PERSONALIZATION.countdown.helperText;
+function setupCountdownAndFinal() {
+  const target = new Date(PERSONALIZATION.countdown.targetDate);
+  const countdown = document.getElementById("countdown-text");
 
   function updateCountdown() {
-    const now = new Date();
-    const remaining = countdownTarget - now;
-    if (remaining <= 0) {
-      countdownText.textContent = PERSONALIZATION.countdown.finishedText;
+    const diff = target - new Date();
+    if (diff <= 0) {
+      countdown.textContent = PERSONALIZATION.countdown.finishedText;
       return;
     }
-
-    const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((remaining / (1000 * 60)) % 60);
-    countdownText.textContent = `${days} days, ${hours} hours, ${mins} mins until our special date ⏳`;
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff / 3600000) % 24);
+    const mins = Math.floor((diff / 60000) % 60);
+    countdown.textContent = `${days} days ${hours} hours ${mins} mins left ⏳`;
   }
 
   updateCountdown();
   setInterval(updateCountdown, 60000);
-}
-
-function setupFinalSection() {
-  document.getElementById("final-question").textContent =
-    PERSONALIZATION.finalSection.question;
 
   const finalMessage = document.getElementById("final-message");
   ["yes-btn", "always-btn"].forEach((id) => {
     document.getElementById(id).addEventListener("click", () => {
       finalMessage.textContent = PERSONALIZATION.finalSection.yesMessage;
+      finalMessage.animate([{ opacity: 0.4 }, { opacity: 1 }], { duration: 250 });
     });
   });
 }
 
-renderHero();
-renderTimeline();
-setupTypewriter();
-setupReasonsDeck();
-setupMapMemories();
-setupQuiz();
-setupCountdown();
-setupFinalSection();
+document.getElementById("replay-letter").addEventListener("click", runTypewriter);
+renderStaticContent();
+setupSlideDeck();
+setupReasons();
+setupMapAndQuiz();
+setupCountdownAndFinal();
+
