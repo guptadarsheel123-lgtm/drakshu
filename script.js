@@ -19,9 +19,9 @@ const PERSONALIZATION = {
     "You are so understandable, hahahaahaha kidding paagal hai kya u and understandable cant come in the same sentence but I love ur gussa pls never stop doing gussa",
   ],
   mapMemories: [
-    { label: "☕ First Coffee", note: "We talked so much we lost track of time." },
-    { label: "🌇 Evening Walk", note: "Perfect sky, perfect company." },
-    { label: "🎬 Movie Night", note: "Shared snacks, shared hoodie, shared smiles." },
+    { label: "LOC 40", note: "Our first spot, the sunset was so scenic and beautiful, but as always u were outshining the sunset by miles, I couldn't keep my eyes off you. It felt like a dream dating you." },
+    { label: "The Car Drive", note: "This is the drive we had after dropping off other ppl, that was the first u opened up so much and I felt so good that for the first time ever u were telling me ur problems, and ur head on my shoulder, i misss it so muchhhhhhh" },
+    { label: "The rubber band", note: "Remember our way home from the first date, tune mujhe tera rubber band pehnaya and u told me I cant take it off, I had so many butterflies at that time u cannot imagine" },
   ],
   quiz: {
     questions: [
