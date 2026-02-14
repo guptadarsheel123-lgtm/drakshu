@@ -1,7 +1,7 @@
 const PERSONALIZATION = {
   hero: {
     title: "Our Little Love Presentation 💌",
-    subtitle: "Use next/previous like a PPT. I made this just for you.",
+    subtitle: "One slide at a time, just for you.",
   },
   timeline: [
     { title: "First Conversation", text: "The day everything started." },
@@ -62,45 +62,9 @@ function renderStaticContent() {
   document.getElementById("final-question").textContent = PERSONALIZATION.finalSection.question;
   document.getElementById("countdown-note").textContent = PERSONALIZATION.countdown.helperText;
 
-  const timelineList = document.getElementById("timeline-list");
-  timelineList.innerHTML = PERSONALIZATION.timeline
+  document.getElementById("timeline-list").innerHTML = PERSONALIZATION.timeline
     .map((item) => `<article><h3>${item.title}</h3><p>${item.text}</p></article>`)
     .join("");
-}
-
-function setupSlideDeck() {
-  const slides = [...document.querySelectorAll("[data-slide]")];
-  const dotsEl = document.getElementById("dots");
-  const counter = document.getElementById("slide-counter");
-  const progress = document.getElementById("progress-bar");
-  let index = 0;
-
-  slides.forEach((_slide, i) => {
-    const dot = document.createElement("button");
-    dot.className = "dot";
-    dot.type = "button";
-    dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
-    dot.addEventListener("click", () => showSlide(i));
-    dotsEl.appendChild(dot);
-  });
-
-  function showSlide(next) {
-    index = (next + slides.length) % slides.length;
-    slides.forEach((s, i) => s.classList.toggle("active", i === index));
-    [...dotsEl.children].forEach((d, i) => d.classList.toggle("active", i === index));
-    counter.textContent = `Slide ${index + 1} / ${slides.length}`;
-    progress.style.width = `${((index + 1) / slides.length) * 100}%`;
-    if (index === 2) runTypewriter();
-  }
-
-  document.getElementById("next-slide").addEventListener("click", () => showSlide(index + 1));
-  document.getElementById("prev-slide").addEventListener("click", () => showSlide(index - 1));
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") showSlide(index + 1);
-    if (event.key === "ArrowLeft") showSlide(index - 1);
-  });
-
-  showSlide(0);
 }
 
 let typewriterTimer;
@@ -117,15 +81,55 @@ function runTypewriter() {
   }, 22);
 }
 
+function setupSlideDeck() {
+  const slides = Array.from(document.querySelectorAll("[data-slide]"));
+  const dotsContainer = document.getElementById("dots");
+  const counter = document.getElementById("slide-counter");
+  const progress = document.getElementById("progress-bar");
+  let index = 0;
+
+  slides.forEach((_slide, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "dot";
+    dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+    dot.addEventListener("click", () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function showSlide(nextIndex) {
+    index = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === index);
+    });
+    Array.from(dotsContainer.children).forEach((dot, i) => {
+      dot.classList.toggle("is-active", i === index);
+    });
+    counter.textContent = `Slide ${index + 1} / ${slides.length}`;
+    progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+
+    if (index === 2) runTypewriter();
+  }
+
+  document.getElementById("next-slide").addEventListener("click", () => showSlide(index + 1));
+  document.getElementById("prev-slide").addEventListener("click", () => showSlide(index - 1));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") showSlide(index + 1);
+    if (event.key === "ArrowLeft") showSlide(index - 1);
+  });
+
+  showSlide(0);
+}
+
 function setupReasons() {
   const title = document.getElementById("reason-title");
   const text = document.getElementById("reason-text");
   let reasonIndex = 0;
 
-  const renderReason = () => {
+  function renderReason() {
     title.textContent = `Reason #${reasonIndex + 1}`;
     text.textContent = PERSONALIZATION.reasons[reasonIndex];
-  };
+  }
 
   document.getElementById("prev-reason").addEventListener("click", () => {
     reasonIndex = (reasonIndex - 1 + PERSONALIZATION.reasons.length) % PERSONALIZATION.reasons.length;
@@ -135,48 +139,54 @@ function setupReasons() {
     reasonIndex = (reasonIndex + 1) % PERSONALIZATION.reasons.length;
     renderReason();
   });
+
   renderReason();
 }
 
 function setupMapAndQuiz() {
   const map = document.getElementById("map-pins");
   const popup = document.getElementById("memory-popup");
+
   PERSONALIZATION.mapMemories.forEach((memory) => {
     const pin = document.createElement("button");
-    pin.className = "pin";
     pin.type = "button";
+    pin.className = "pin";
     pin.textContent = memory.label;
     pin.addEventListener("click", () => {
       popup.innerHTML = `<h3>${memory.label}</h3><p>${memory.note}</p>`;
-      popup.animate([{ transform: "scale(0.98)" }, { transform: "scale(1)" }], { duration: 160 });
     });
     map.appendChild(pin);
   });
 
   const form = document.getElementById("quiz-form");
   const result = document.getElementById("quiz-result");
+
   PERSONALIZATION.quiz.questions.forEach((question, questionIndex) => {
     const fieldset = document.createElement("fieldset");
-    fieldset.innerHTML = `<legend>${question.prompt}</legend>`;
+    const legend = document.createElement("legend");
+    legend.textContent = question.prompt;
+    fieldset.appendChild(legend);
+
     question.answers.forEach((answer) => {
       const label = document.createElement("label");
-      label.innerHTML = `<input required type="radio" name="q${questionIndex}" value="${answer.points}"> ${answer.label}`;
+      label.innerHTML = `<input type="radio" required name="q${questionIndex}" value="${answer.points}"> ${answer.label}`;
       fieldset.appendChild(label);
     });
+
     form.appendChild(fieldset);
   });
 
   const submit = document.createElement("button");
-  submit.className = "btn";
   submit.type = "submit";
+  submit.className = "btn";
   submit.textContent = "Check Score";
   form.appendChild(submit);
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
     const data = new FormData(form);
     const score = PERSONALIZATION.quiz.questions.reduce(
-      (sum, _q, i) => sum + Number(data.get(`q${i}`)),
+      (sum, _question, questionIndex) => sum + Number(data.get(`q${questionIndex}`)),
       0,
     );
     result.textContent =
@@ -196,6 +206,7 @@ function setupCountdownAndFinal() {
       countdown.textContent = PERSONALIZATION.countdown.finishedText;
       return;
     }
+
     const days = Math.floor(diff / 86400000);
     const hours = Math.floor((diff / 3600000) % 24);
     const mins = Math.floor((diff / 60000) % 60);
@@ -209,7 +220,6 @@ function setupCountdownAndFinal() {
   ["yes-btn", "always-btn"].forEach((id) => {
     document.getElementById(id).addEventListener("click", () => {
       finalMessage.textContent = PERSONALIZATION.finalSection.yesMessage;
-      finalMessage.animate([{ opacity: 0.4 }, { opacity: 1 }], { duration: 250 });
     });
   });
 }
@@ -220,4 +230,5 @@ setupSlideDeck();
 setupReasons();
 setupMapAndQuiz();
 setupCountdownAndFinal();
+
 
