@@ -48,13 +48,9 @@
 
         <article class="slide" data-slide>
           <h2>3) Reasons I Love You</h2>
-          <div class="reasons-wrap">
-            <button id="prev-reason" class="icon-btn" type="button" aria-label="Previous reason">◀</button>
-            <article class="card">
-              <h3 id="reason-title"></h3>
-              <p id="reason-text"></p>
-            </article>
-            <button id="next-reason" class="icon-btn" type="button" aria-label="Next reason">▶</button>
+          <div class="reasons-stack-wrap">
+            <div id="reasons-stack" class="reasons-stack" aria-live="polite"></div>
+            <button id="next-reason" class="btn" type="button">Show Next Reason 💗</button>
           </div>
         </article>
 
@@ -83,7 +79,7 @@
         </article>
 
         <article class="slide slide--final" data-slide>
-          <h2>One Last Question...</h2>
+          <h2 class="final-title">One Last Question...</h2>
           <p id="final-question" class="final-question"></p>
           <div class="actions actions--final" id="final-actions">
             <button id="yes-btn" class="btn btn--yes" type="button">Yes 💖</button>
@@ -103,6 +99,7 @@
     <script src="script.js"></script>
   </body>
 </html>
+
 
 
 
