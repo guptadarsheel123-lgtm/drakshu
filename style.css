@@ -80,7 +80,12 @@ h2, h3 { margin: 0; font-family: "Playfair Display", serif; }
   padding: 12px 14px;
 }
 
-.typewriter { min-height: 140px; }
+.typewriter {
+  min-height: 140px;
+  max-height: 320px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
 .reasons-stack-wrap { display: grid; gap: 12px; align-content: start; }
 .reasons-stack {
   display: grid;
@@ -169,6 +174,7 @@ h2, h3 { margin: 0; font-family: "Playfair Display", serif; }
   .map-grid { grid-template-columns: 1fr; }
   .actions { flex-wrap: wrap; }
 }
+
 
 
 
