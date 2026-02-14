@@ -7,82 +7,91 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="deck" aria-label="Valentine slide deck">
+    <main class="deck" aria-label="Valentine presentation">
       <header class="deck__header">
-        <p id="slide-counter">Slide 1 / 7</p>
-        <div class="progress"><span id="progress-bar"></span></div>
+        <div>
+          <p class="eyebrow">Valentine Deck</p>
+          <h1 class="deck-title">For My Favorite Person 💖</h1>
+        </div>
+        <div class="deck__meta">
+          <p id="slide-counter" class="slide-counter">Slide 1 / 7</p>
+          <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+        </div>
       </header>
 
-      <section class="slide active" data-slide>
-        <div class="hero-hearts" aria-hidden="true">💗 💖 💘 💕</div>
-        <h1 id="hero-title"></h1>
-        <p id="hero-subtitle"></p>
-      </section>
-
-      <section class="slide" data-slide>
-        <h2>1) Timeline of Our Story</h2>
-        <div id="timeline-list" class="timeline"></div>
-      </section>
-
-      <section class="slide" data-slide>
-        <h2>2) Love Letter Reveal</h2>
-        <p id="typewriter" class="typewriter" aria-live="polite"></p>
-        <button id="replay-letter" class="btn btn--soft" type="button">Replay Letter</button>
-      </section>
-
-      <section class="slide" data-slide>
-        <h2>3) Reasons I Love You</h2>
-        <div class="row">
-          <button id="prev-reason" class="icon-btn" type="button">◀</button>
-          <article class="card">
-            <h3 id="reason-title"></h3>
-            <p id="reason-text"></p>
-          </article>
-          <button id="next-reason" class="icon-btn" type="button">▶</button>
-        </div>
-      </section>
-
-      <section class="slide" data-slide>
-        <h2>4) Memory Map + 5) Couple Quiz</h2>
-        <div id="map-pins" class="map-grid"></div>
-        <article id="memory-popup" class="memory-popup">
-          <h3>Tap a memory pin 💞</h3>
-          <p>Each place has a tiny story from us.</p>
+      <section class="stage" aria-live="polite">
+        <article class="slide is-active" data-slide>
+          <h2 id="hero-title"></h2>
+          <p id="hero-subtitle" class="lead"></p>
+          <p class="hint">Use Next / Previous or keyboard arrows.</p>
         </article>
-        <form id="quiz-form"></form>
-        <p id="quiz-result" class="quiz-result"></p>
+
+        <article class="slide" data-slide>
+          <h2>1) Timeline of Our Story</h2>
+          <div id="timeline-list" class="timeline"></div>
+        </article>
+
+        <article class="slide" data-slide>
+          <h2>2) Love Letter Reveal</h2>
+          <p id="typewriter" class="typewriter"></p>
+          <button id="replay-letter" class="btn btn--soft" type="button">Replay Letter</button>
+        </article>
+
+        <article class="slide" data-slide>
+          <h2>3) Reasons I Love You</h2>
+          <div class="reasons-wrap">
+            <button id="prev-reason" class="icon-btn" type="button" aria-label="Previous reason">◀</button>
+            <article class="card">
+              <h3 id="reason-title"></h3>
+              <p id="reason-text"></p>
+            </article>
+            <button id="next-reason" class="icon-btn" type="button" aria-label="Next reason">▶</button>
+          </div>
+        </article>
+
+        <article class="slide" data-slide>
+          <h2>4) Memory Map + 5) Couple Quiz</h2>
+          <div id="map-pins" class="map-grid"></div>
+          <article id="memory-popup" class="memory-popup">
+            <h3>Tap a memory pin 💞</h3>
+            <p>Each place has a tiny story from us.</p>
+          </article>
+          <form id="quiz-form" class="quiz-form"></form>
+          <p id="quiz-result" class="quiz-result"></p>
+        </article>
+
+        <article class="slide" data-slide>
+          <h2>9) Countdown to Our Next Date</h2>
+          <p id="countdown-text" class="countdown"></p>
+          <p id="countdown-note" class="muted"></p>
+        </article>
+
+        <article class="slide" data-slide>
+          <h2>One Last Question...</h2>
+          <p id="final-question" class="final-question"></p>
+          <div class="actions">
+            <button id="yes-btn" class="btn" type="button">Yes 💖</button>
+            <button id="always-btn" class="btn btn--soft" type="button">Always yes ✨</button>
+          </div>
+          <p id="final-message" class="final-message"></p>
+        </article>
       </section>
 
-      <section class="slide" data-slide>
-        <h2>9) Countdown to Our Next Date</h2>
-        <p id="countdown-text" class="countdown">Calculating...</p>
-        <p id="countdown-note" class="muted"></p>
-      </section>
-
-      <section class="slide" data-slide>
-        <h2>One Last Question...</h2>
-        <p id="final-question" class="final-question"></p>
-        <div class="row center">
-          <button id="yes-btn" class="btn" type="button">Yes 💖</button>
-          <button id="always-btn" class="btn btn--soft" type="button">Always yes ✨</button>
-        </div>
-        <p id="final-message" class="final-message"></p>
-      </section>
-
-      <nav class="deck__nav" aria-label="Slide controls">
+      <footer class="deck__footer">
         <button id="prev-slide" class="btn btn--soft" type="button">Previous</button>
-        <div id="dots" class="dots"></div>
+        <div id="dots" class="dots" aria-label="Slide navigation dots"></div>
         <button id="next-slide" class="btn" type="button">Next</button>
-      </nav>
+      </footer>
     </main>
 
     <script src="script.js"></script>
   </body>
 </html>
+
 
