@@ -1,13 +1,13 @@
 const PERSONALIZATION = {
   hero: {
-    title: "Our Little Love Presentation 💌",
-    subtitle: "One slide at a time, just for you.",
+    title: "A small Valentine's gift for the love of my life",
+    subtitle: "Happy Valentine's Day cutu",
   },
   timeline: [
-    { title: "First Conversation", text: "The day everything started." },
-    { title: "First Date", text: "Nervous smiles and nonstop laughs." },
-    { title: "Favorite Memory", text: "That day we never wanted to end." },
-    { title: "Today", text: "Still my favorite person, always." },
+    { title: "First Text", text: "I still remember the moment I received that text from you, confused whether u want to confess ur love or if u were gonna ask me out." },
+    { title: "First Meet", text: "I was so nervous, and seeing the prettiest girl in the world didn't help it." },
+    { title: "First Date", text: "Honestly, this was the most nervous I have ever been in life, but that day will top the best days of my life" },
+    { title: "First Kiss", text: "Not too far from our first date, I was the happiest man in the world that day" },
   ],
   letterText:
     "You make life warmer, brighter, and better. Thank you for being my peace, my laughter, and my best memory every day.",
