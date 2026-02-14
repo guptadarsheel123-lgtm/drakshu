@@ -1,113 +1,129 @@
 # drakshu
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/script.js b/script.js
-new file mode 100644
-index 0000000000000000000000000000000000000000..3770e2b382436e9a3f41f1a4b88bf65375200b9f
---- /dev/null
-+++ b/script.js
-@@ -0,0 +1,102 @@
-+const letterText =
-+  "Every day with you feels like my favorite part of life. Thank you for your laugh, your kindness, and for making ordinary moments feel magical. I love you more than words can say.";
-+const typewriterEl = document.getElementById("typewriter");
-+const replayLetterButton = document.getElementById("replay-letter");
-+
-+function runTypewriter() {
-+  typewriterEl.textContent = "";
-+  let i = 0;
-+  const timer = setInterval(() => {
-+    typewriterEl.textContent += letterText[i];
-+    i += 1;
-+    if (i >= letterText.length) clearInterval(timer);
-+  }, 24);
-+}
-+
-+replayLetterButton.addEventListener("click", runTypewriter);
-+runTypewriter();
-+
-+const reasons = [
-+  "You make me feel safe, seen, and loved.",
-+  "Your smile can fix even my toughest day.",
-+  "You believe in me when I overthink.",
-+  "You are beautiful inside and out.",
-+  "Life is better, softer, and happier with you.",
-+];
-+let reasonIndex = 0;
-+const reasonTitle = document.getElementById("reason-title");
-+const reasonText = document.getElementById("reason-text");
-+
-+function renderReason() {
-+  reasonTitle.textContent = `Reason #${reasonIndex + 1}`;
-+  reasonText.textContent = reasons[reasonIndex];
-+}
-+
-+document.getElementById("prev-reason").addEventListener("click", () => {
-+  reasonIndex = (reasonIndex - 1 + reasons.length) % reasons.length;
-+  renderReason();
-+});
-+
-+document.getElementById("next-reason").addEventListener("click", () => {
-+  reasonIndex = (reasonIndex + 1) % reasons.length;
-+  renderReason();
-+});
-+renderReason();
-+
-+const memoryNotes = {
-+  Cafe: "The day we sat forever talking and forgot the time.",
-+  Park: "That golden-hour walk where we laughed nonstop.",
-+  Beach: "Windy hair, warm hands, and a perfect sky.",
-+  Cinema: "One popcorn, two straws, and your shoulder as my pillow.",
-+};
-+
-+const popup = document.getElementById("memory-popup");
-+document.querySelectorAll(".pin").forEach((pin) => {
-+  pin.addEventListener("click", () => {
-+    const place = pin.dataset.place;
-+    popup.innerHTML = `<h3>${pin.textContent}</h3><p>${memoryNotes[place]}</p>`;
-+  });
-+});
-+
-+const quizForm = document.getElementById("quiz-form");
-+const quizResult = document.getElementById("quiz-result");
-+quizForm.addEventListener("submit", (event) => {
-+  event.preventDefault();
-+  const data = new FormData(quizForm);
-+  const score = Number(data.get("q1")) + Number(data.get("q2"));
-+  if (score >= 5) {
-+    quizResult.textContent =
-+      "Perfect score — you know us too well. Our love language is laughter + comfort 💞";
-+  } else {
-+    quizResult.textContent =
-+      "No matter the score, we still win because we have each other 💗";
-+  }
-+});
-+
-+const countdownTarget = new Date("2026-02-14T00:00:00");
-+const countdownText = document.getElementById("countdown-text");
-+
-+function updateCountdown() {
-+  const now = new Date();
-+  const remaining = countdownTarget - now;
-+  if (remaining <= 0) {
-+    countdownText.textContent = "It's today! Surprise unlocked 💝";
-+    return;
-+  }
-+
-+  const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-+  const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
-+  const mins = Math.floor((remaining / (1000 * 60)) % 60);
-+  countdownText.textContent = `${days} days, ${hours} hours, ${mins} mins until our special date ⏳`;
-+}
-+
-+updateCountdown();
-+setInterval(updateCountdown, 60000);
-+
-+const finalMessage = document.getElementById("final-message");
-+["yes-btn", "always-btn"].forEach((id) => {
-+  document.getElementById(id).addEventListener("click", () => {
-+    finalMessage.textContent =
-+      "YAY! 💖 Best answer ever. I can't wait for all the memories still coming.";
-+  });
-+});
- 
-EOF
-)
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Valentine Story</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__hearts" aria-hidden="true">
+        <span>💗</span><span>💖</span><span>💘</span><span>💕</span>
+      </div>
+      <h1>For My Favorite Person 💌</h1>
+      <p>
+        A tiny website for us — our story, our little memories, and one big
+        question at the end.
+      </p>
+      <a href="#timeline" class="btn">Start Our Story</a>
+    </header>
+
+    <main>
+      <section id="timeline" class="section">
+        <h2>1) Timeline of Our Story</h2>
+        <div class="timeline">
+          <article>
+            <h3>First Conversation</h3>
+            <p>The moment we started talking and everything got brighter.</p>
+          </article>
+          <article>
+            <h3>First Date</h3>
+            <p>
+              Nervous smiles, laughs, and that instant feeling of “this is
+              special.”
+            </p>
+          </article>
+          <article>
+            <h3>Favorite Trip</h3>
+            <p>
+              New places, silly photos, and memories I still replay all the
+              time.
+            </p>
+          </article>
+          <article>
+            <h3>Today</h3>
+            <p>Still choosing you every day — and still very in love with you.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="letter" class="section">
+        <h2>2) Love Letter Reveal</h2>
+        <p id="typewriter" class="typewriter" aria-live="polite"></p>
+        <button id="replay-letter" class="btn btn--soft">Replay Letter</button>
+      </section>
+
+      <section id="reasons" class="section">
+        <h2>3) Reasons I Love You</h2>
+        <div class="deck">
+          <button id="prev-reason" class="deck__nav" aria-label="Previous reason">◀</button>
+          <article class="card" id="reason-card">
+            <h3 id="reason-title">Reason #1</h3>
+            <p id="reason-text"></p>
+          </article>
+          <button id="next-reason" class="deck__nav" aria-label="Next reason">▶</button>
+        </div>
+      </section>
+
+      <section id="map" class="section">
+        <h2>4) Interactive Map of Memories</h2>
+        <div class="map-grid">
+          <button class="pin" data-place="Cafe">☕ First Coffee Spot</button>
+          <button class="pin" data-place="Park">🌳 Sunset Park Walk</button>
+          <button class="pin" data-place="Beach">🌊 Beach Day</button>
+          <button class="pin" data-place="Cinema">🎬 Cozy Movie Night</button>
+        </div>
+        <article id="memory-popup" class="memory-popup">
+          <h3>Tap a memory pin 💞</h3>
+          <p>Each place has a tiny story from us.</p>
+        </article>
+      </section>
+
+      <section id="quiz" class="section">
+        <h2>5) Mini Couple Quiz</h2>
+        <form id="quiz-form">
+          <fieldset>
+            <legend>What is our ideal date vibe?</legend>
+            <label><input type="radio" name="q1" value="2" required /> Food + long talks</label>
+            <label><input type="radio" name="q1" value="1" /> Fancy restaurant</label>
+            <label><input type="radio" name="q1" value="3" /> Anywhere as long as we're together</label>
+          </fieldset>
+          <fieldset>
+            <legend>Which emoji feels most like us?</legend>
+            <label><input type="radio" name="q2" value="2" required /> 💕</label>
+            <label><input type="radio" name="q2" value="3" /> 😂</label>
+            <label><input type="radio" name="q2" value="1" /> 🌹</label>
+          </fieldset>
+          <button type="submit" class="btn">See Result</button>
+        </form>
+        <p id="quiz-result" class="quiz-result"></p>
+      </section>
+
+      <section id="countdown" class="section">
+        <h2>9) Countdown to Our Next Date</h2>
+        <p class="countdown" id="countdown-text">Calculating...</p>
+        <p class="muted">(Set in script.js — easy to customize.)</p>
+      </section>
+
+      <section id="final" class="section final">
+        <h2>One Last Question...</h2>
+        <p>Will u be my valentine? 💘</p>
+        <div class="final__buttons">
+          <button id="yes-btn" class="btn">Yes 💖</button>
+          <button id="always-btn" class="btn btn--soft">Always yes ✨</button>
+        </div>
+        <p id="final-message" class="final-message"></p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
