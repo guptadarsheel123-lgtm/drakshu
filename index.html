@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Our Valentine Story</title>
+    <title>Our Valentine Story Deck</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,74 +13,76 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="hero__hearts" aria-hidden="true">
-        <span>💗</span><span>💖</span><span>💘</span><span>💕</span>
-      </div>
-      <h1 id="hero-title">For My Favorite Person 💌</h1>
-      <p id="hero-subtitle">
-        A tiny website for us — our story, our little memories, and one big
-        question at the end.
-      </p>
-      <a href="#timeline" class="btn">Start Our Story</a>
-    </header>
+    <main class="deck" aria-label="Valentine slide deck">
+      <header class="deck__header">
+        <p id="slide-counter">Slide 1 / 7</p>
+        <div class="progress"><span id="progress-bar"></span></div>
+      </header>
 
-    <main>
-      <section id="timeline" class="section">
-        <h2>1) Timeline of Our Story</h2>
-        <div class="timeline" id="timeline-list"></div>
+      <section class="slide active" data-slide>
+        <div class="hero-hearts" aria-hidden="true">💗 💖 💘 💕</div>
+        <h1 id="hero-title"></h1>
+        <p id="hero-subtitle"></p>
       </section>
 
-      <section id="letter" class="section">
+      <section class="slide" data-slide>
+        <h2>1) Timeline of Our Story</h2>
+        <div id="timeline-list" class="timeline"></div>
+      </section>
+
+      <section class="slide" data-slide>
         <h2>2) Love Letter Reveal</h2>
         <p id="typewriter" class="typewriter" aria-live="polite"></p>
-        <button id="replay-letter" class="btn btn--soft">Replay Letter</button>
+        <button id="replay-letter" class="btn btn--soft" type="button">Replay Letter</button>
       </section>
 
-      <section id="reasons" class="section">
+      <section class="slide" data-slide>
         <h2>3) Reasons I Love You</h2>
-        <div class="deck">
-          <button id="prev-reason" class="deck__nav" aria-label="Previous reason">◀</button>
-          <article class="card" id="reason-card">
-            <h3 id="reason-title">Reason #1</h3>
+        <div class="row">
+          <button id="prev-reason" class="icon-btn" type="button">◀</button>
+          <article class="card">
+            <h3 id="reason-title"></h3>
             <p id="reason-text"></p>
           </article>
-          <button id="next-reason" class="deck__nav" aria-label="Next reason">▶</button>
+          <button id="next-reason" class="icon-btn" type="button">▶</button>
         </div>
       </section>
 
-      <section id="map" class="section">
-        <h2>4) Interactive Map of Memories</h2>
-        <div class="map-grid" id="map-pins"></div>
+      <section class="slide" data-slide>
+        <h2>4) Memory Map + 5) Couple Quiz</h2>
+        <div id="map-pins" class="map-grid"></div>
         <article id="memory-popup" class="memory-popup">
           <h3>Tap a memory pin 💞</h3>
           <p>Each place has a tiny story from us.</p>
         </article>
-      </section>
-
-      <section id="quiz" class="section">
-        <h2>5) Mini Couple Quiz</h2>
         <form id="quiz-form"></form>
         <p id="quiz-result" class="quiz-result"></p>
       </section>
 
-      <section id="countdown" class="section">
+      <section class="slide" data-slide>
         <h2>9) Countdown to Our Next Date</h2>
-        <p class="countdown" id="countdown-text">Calculating...</p>
-        <p class="muted" id="countdown-note"></p>
+        <p id="countdown-text" class="countdown">Calculating...</p>
+        <p id="countdown-note" class="muted"></p>
       </section>
 
-      <section id="final" class="section final">
+      <section class="slide" data-slide>
         <h2>One Last Question...</h2>
-        <p id="final-question">Will u be my valentine? 💘</p>
-        <div class="final__buttons">
-          <button id="yes-btn" class="btn">Yes 💖</button>
-          <button id="always-btn" class="btn btn--soft">Always yes ✨</button>
+        <p id="final-question" class="final-question"></p>
+        <div class="row center">
+          <button id="yes-btn" class="btn" type="button">Yes 💖</button>
+          <button id="always-btn" class="btn btn--soft" type="button">Always yes ✨</button>
         </div>
         <p id="final-message" class="final-message"></p>
       </section>
+
+      <nav class="deck__nav" aria-label="Slide controls">
+        <button id="prev-slide" class="btn btn--soft" type="button">Previous</button>
+        <div id="dots" class="dots"></div>
+        <button id="next-slide" class="btn" type="button">Next</button>
+      </nav>
     </main>
 
     <script src="script.js"></script>
   </body>
 </html>
+
