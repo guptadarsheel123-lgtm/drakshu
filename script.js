@@ -10,13 +10,13 @@ const PERSONALIZATION = {
     { title: "First Kiss", text: "Not too far from our first date, I was the happiest man in the world that day" },
   ],
   letterText:
-    "Hello cutupie, bhai mai sachmai bahot bura you have told me a million times that u like love letters and u have even told me to send u letters but you are sadly dating the laziest guy in the world :(. So this is a small compensation honestly I have no clue what people write in a love letter. I will try my best so pls don't tell me even if u dont like the letter. Drakshu u genuinely are the love of my life, u have no clue how much I love you, I am sorry for everything that I have ever done that hurt you cant say it enough times, you definitely deserve a better guy but u won't find a guy who would love u more than I do. You might not agree with me but you are the most beautiful girl in this world u know I have had a crush on you since so long, and you mumma swear made evry other girl unattractive no matter how they look who they are even when I moved to London. I didnt find anyone attractive except u I used to stalk u so much. So pls stop looking soooooo pretty warna you will dump me for a hotter guy. I know i have told u this enough times but still u are the most most most beautiful kind and i dont have enough words to describe soul i have ever had a chance to know you can brighten up anyone's life. tujhe pata nahi tu mazak karti hai par tu sachmai devi hai u have got divine powers, pls. i miss u so much meri jaan i cant wait to seeeeee youuu hugg youuuu kisssss youuuuuuuuu meri jaaaaaaaaaaaaaan :))",
+    "Hello cutupie, bhai mai sachmai bahot bura you have told me a million times that u like love letters and u have even told me to send u letters but you are sadly dating the laziest guy in the world :(. So this is a small compensation honestly I have no clue what people write in a love letter. I will try my best so pls don't tell me even if u dont like the letter. Drakshu u genuinely are the love of my life, u have no clue how much I love you, I am sorry for everything that I have ever done that hurt you cant say it enough times, you definitely deserve a better guy but u won't find a guy who would love u more than I do. You might not agree with me but you are the most beautiful girl in this world u know I have had a crush on you since so long, and you mumma swear made every other girl unattractive no matter how they look who they are even when I moved to London. I didnt find anyone attractive except u I used to stalk u so much. So pls stop looking soooooo pretty warna you will dump me for a hotter guy. I know i have told u this enough times but still u are the most most most beautiful kind and i dont have enough words to describe soul i have ever had a chance to know you can brighten up anyone's life. tujhe pata nahi tu mazak karti hai par tu sachmai devi hai u have got divine powers. i miss u so much i cant wait to seeeeee youuu hugg youuuu kisssss youuuuuuuuu meri jaaaaaaaaaaaaaan :))",
   reasons: [
-    "You make me feel understood.",
-    "Your smile resets my whole day.",
-    "You are kind in the little things.",
-    "I love how we laugh together.",
-    "You feel like home.",
+    "You dont judge me, I can tell you everything without even thinking twice.",
+    "Talking to you feels like a remedy, If I wanted I would wish bhagwanji that I could 24*7 with u.",
+    "You care about me, you might not show it but I can feel it",
+    "Whenever Im w you I dont feel time as if the world ceases to exist it is only about u",
+    "You are so understandable, hahahaahaha kidding paagal hai kya u and understandable cant come in the same sentence but I love ur gussa pls never stop doing gussa",
   ],
   mapMemories: [
     { label: "☕ First Coffee", note: "We talked so much we lost track of time." },
