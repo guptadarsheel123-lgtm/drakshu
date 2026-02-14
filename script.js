@@ -163,7 +163,7 @@ function setupReasons() {
     shownCount += 1;
 
     if (shownCount >= PERSONALIZATION.reasons.length) {
-      nextReasonBtn.textContent = "All Reasons Revealed 💞";
+      nextReasonBtn.textContent = "I will have to write continously for the next 1-2 year to list all the reasons, sorry for not writing all of them. 💞";
       nextReasonBtn.disabled = true;
     }
   }
