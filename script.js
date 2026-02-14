@@ -228,7 +228,7 @@ function setupQuiz() {
       const correctText = question.answers[question.correctIndex];
       li.textContent = correct
         ? `Q${questionIndex + 1}: Correct ✅`
-        : `Q${questionIndex + 1}: Incorrect ❌ (Correct: ${correctText})`;
+        : `Q${questionIndex + 1}: Incorrect ❌;
       feedback.appendChild(li);
     });
 
