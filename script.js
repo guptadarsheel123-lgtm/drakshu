@@ -149,25 +149,27 @@ function setupSlideDeck() {
 }
 
 function setupReasons() {
-  const title = document.getElementById("reason-title");
-  const text = document.getElementById("reason-text");
-  let reasonIndex = 0;
+  const stack = document.getElementById("reasons-stack");
+  const nextReasonBtn = document.getElementById("next-reason");
+  let shownCount = 0;
 
-  function renderReason() {
-    title.textContent = `Reason #${reasonIndex + 1}`;
-    text.textContent = PERSONALIZATION.reasons[reasonIndex];
+  function revealNextReason() {
+    if (shownCount >= PERSONALIZATION.reasons.length) return;
+
+    const reasonCard = document.createElement("article");
+    reasonCard.className = "card reason-card";
+    reasonCard.innerHTML = `<h3>Reason #${shownCount + 1}</h3><p>${PERSONALIZATION.reasons[shownCount]}</p>`;
+    stack.appendChild(reasonCard);
+    shownCount += 1;
+
+    if (shownCount >= PERSONALIZATION.reasons.length) {
+      nextReasonBtn.textContent = "All Reasons Revealed 💞";
+      nextReasonBtn.disabled = true;
+    }
   }
 
-  document.getElementById("prev-reason").addEventListener("click", () => {
-    reasonIndex = (reasonIndex - 1 + PERSONALIZATION.reasons.length) % PERSONALIZATION.reasons.length;
-    renderReason();
-  });
-  document.getElementById("next-reason").addEventListener("click", () => {
-    reasonIndex = (reasonIndex + 1) % PERSONALIZATION.reasons.length;
-    renderReason();
-  });
-
-  renderReason();
+  nextReasonBtn.addEventListener("click", revealNextReason);
+  revealNextReason();
 }
 
 function setupMap() {
@@ -295,6 +297,7 @@ setupReasons();
 setupMap();
 setupQuiz();
 setupCountdownAndFinal();
+
 
 
 
