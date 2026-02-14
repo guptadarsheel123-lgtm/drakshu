@@ -39,8 +39,11 @@
 
         <article class="slide" data-slide>
           <h2>2) Love Letter Reveal</h2>
-          <p id="typewriter" class="typewriter"></p>
-          <button id="replay-letter" class="btn btn--soft" type="button">Replay Letter</button>
+          <p id="typewriter" class="typewriter">Press reveal when you're ready 💌</p>
+          <div class="actions">
+            <button id="reveal-letter" class="btn" type="button">Reveal Letter</button>
+            <button id="replay-letter" class="btn btn--soft" type="button">Replay</button>
+          </div>
         </article>
 
         <article class="slide" data-slide>
@@ -64,6 +67,7 @@
           </article>
           <form id="quiz-form" class="quiz-form"></form>
           <p id="quiz-result" class="quiz-result"></p>
+          <ul id="quiz-feedback" class="quiz-feedback"></ul>
         </article>
 
         <article class="slide" data-slide>
@@ -72,12 +76,12 @@
           <p id="countdown-note" class="muted"></p>
         </article>
 
-        <article class="slide" data-slide>
+        <article class="slide slide--final" data-slide>
           <h2>One Last Question...</h2>
           <p id="final-question" class="final-question"></p>
-          <div class="actions">
-            <button id="yes-btn" class="btn" type="button">Yes 💖</button>
-            <button id="always-btn" class="btn btn--soft" type="button">Always yes ✨</button>
+          <div class="actions actions--final" id="final-actions">
+            <button id="yes-btn" class="btn btn--yes" type="button">Yes 💖</button>
+            <button id="no-btn" class="btn btn--soft btn--no" type="button">No</button>
           </div>
           <p id="final-message" class="final-message"></p>
         </article>
@@ -93,5 +97,6 @@
     <script src="script.js"></script>
   </body>
 </html>
+
 
 
