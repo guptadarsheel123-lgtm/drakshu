@@ -27,23 +27,26 @@ const PERSONALIZATION = {
     questions: [
       {
         prompt: "Our best date vibe?",
-        answers: [
-          { label: "Long talks + comfort food", points: 3 },
-          { label: "Fancy place", points: 1 },
-          { label: "Anywhere together", points: 2 },
-        ],
+        answers: ["Long talks + comfort food", "Fancy place", "Anywhere together"],
+        correctIndex: 0,
       },
       {
         prompt: "Pick our couple emoji:",
-        answers: [
-          { label: "💞", points: 3 },
-          { label: "😂", points: 2 },
-          { label: "🌹", points: 1 },
-        ],
+        answers: ["💞", "😂", "🌹"],
+        correctIndex: 0,
+      },
+      {
+        prompt: "What matters most to us?",
+        answers: ["Being together", "Perfect plans", "Expensive gifts"],
+        correctIndex: 0,
       },
     ],
-    highScoreMessage: "A+ girlfriend energy. You know us perfectly 💖",
-    lowScoreMessage: "No score matters. We still win because it's us 💗",
+    messagesByScore: {
+      0: "Okay this is cute chaos 😂 We need a rematch.",
+      1: "1/3 — warm-up round, you're still my favorite 💗",
+      2: "2/3 — almost perfect! You know us really well 💞",
+      3: "3/3 — perfect score! Soulmate-level answering 💖",
+    },
   },
   countdown: {
     targetDate: "2027-02-14T00:00:00",
@@ -52,7 +55,7 @@ const PERSONALIZATION = {
   },
   finalSection: {
     question: "Will u be my valentine? 💘",
-    yesMessage: "YAYYY 💖 You just made this the best slide ever.",
+    yesMessage: "YAYYY 💖 Best answer. I love you forever.",
   },
 };
 
@@ -81,6 +84,24 @@ function runTypewriter() {
   }, 22);
 }
 
+function setupLetterReveal() {
+  let revealed = false;
+  const revealBtn = document.getElementById("reveal-letter");
+  const replayBtn = document.getElementById("replay-letter");
+  replayBtn.disabled = true;
+
+  revealBtn.addEventListener("click", () => {
+    runTypewriter();
+    revealed = true;
+    replayBtn.disabled = false;
+    revealBtn.textContent = "Revealed 💌";
+  });
+
+  replayBtn.addEventListener("click", () => {
+    if (revealed) runTypewriter();
+  });
+}
+
 function setupSlideDeck() {
   const slides = Array.from(document.querySelectorAll("[data-slide]"));
   const dotsContainer = document.getElementById("dots");
@@ -99,16 +120,10 @@ function setupSlideDeck() {
 
   function showSlide(nextIndex) {
     index = (nextIndex + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("is-active", i === index);
-    });
-    Array.from(dotsContainer.children).forEach((dot, i) => {
-      dot.classList.toggle("is-active", i === index);
-    });
+    slides.forEach((slide, i) => slide.classList.toggle("is-active", i === index));
+    Array.from(dotsContainer.children).forEach((dot, i) => dot.classList.toggle("is-active", i === index));
     counter.textContent = `Slide ${index + 1} / ${slides.length}`;
     progress.style.width = `${((index + 1) / slides.length) * 100}%`;
-
-    if (index === 2) runTypewriter();
   }
 
   document.getElementById("next-slide").addEventListener("click", () => showSlide(index + 1));
@@ -160,16 +175,17 @@ function setupMapAndQuiz() {
 
   const form = document.getElementById("quiz-form");
   const result = document.getElementById("quiz-result");
+  const feedback = document.getElementById("quiz-feedback");
 
   PERSONALIZATION.quiz.questions.forEach((question, questionIndex) => {
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    legend.textContent = question.prompt;
+    legend.textContent = `${questionIndex + 1}. ${question.prompt}`;
     fieldset.appendChild(legend);
 
-    question.answers.forEach((answer) => {
+    question.answers.forEach((answer, answerIndex) => {
       const label = document.createElement("label");
-      label.innerHTML = `<input type="radio" required name="q${questionIndex}" value="${answer.points}"> ${answer.label}`;
+      label.innerHTML = `<input type="radio" required name="q${questionIndex}" value="${answerIndex}"> ${answer}`;
       fieldset.appendChild(label);
     });
 
@@ -185,14 +201,23 @@ function setupMapAndQuiz() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const score = PERSONALIZATION.quiz.questions.reduce(
-      (sum, _question, questionIndex) => sum + Number(data.get(`q${questionIndex}`)),
-      0,
-    );
-    result.textContent =
-      score >= PERSONALIZATION.quiz.questions.length * 2.5
-        ? PERSONALIZATION.quiz.highScoreMessage
-        : PERSONALIZATION.quiz.lowScoreMessage;
+    let score = 0;
+    feedback.innerHTML = "";
+
+    PERSONALIZATION.quiz.questions.forEach((question, questionIndex) => {
+      const selectedIndex = Number(data.get(`q${questionIndex}`));
+      const correct = selectedIndex === question.correctIndex;
+      if (correct) score += 1;
+
+      const li = document.createElement("li");
+      const correctText = question.answers[question.correctIndex];
+      li.textContent = correct
+        ? `Q${questionIndex + 1}: Correct ✅`
+        : `Q${questionIndex + 1}: Incorrect ❌ (Correct: ${correctText})`;
+      feedback.appendChild(li);
+    });
+
+    result.textContent = `Score: ${score}/${PERSONALIZATION.quiz.questions.length} — ${PERSONALIZATION.quiz.messagesByScore[score]}`;
   });
 }
 
@@ -216,17 +241,38 @@ function setupCountdownAndFinal() {
   updateCountdown();
   setInterval(updateCountdown, 60000);
 
+  const yesBtn = document.getElementById("yes-btn");
+  const noBtn = document.getElementById("no-btn");
   const finalMessage = document.getElementById("final-message");
-  ["yes-btn", "always-btn"].forEach((id) => {
-    document.getElementById(id).addEventListener("click", () => {
-      finalMessage.textContent = PERSONALIZATION.finalSection.yesMessage;
-    });
+  const actions = document.getElementById("final-actions");
+  let yesScale = 1;
+
+  function dodgeNo() {
+    const rangeX = Math.max(30, actions.clientWidth / 3);
+    const rangeY = 16;
+    const randomX = Math.floor(Math.random() * rangeX) - rangeX / 2;
+    const randomY = Math.floor(Math.random() * rangeY) - rangeY / 2;
+    noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+    yesScale = Math.min(1.9, yesScale + 0.08);
+    yesBtn.style.transform = `scale(${yesScale})`;
+  }
+
+  noBtn.addEventListener("mouseenter", dodgeNo);
+  noBtn.addEventListener("focus", dodgeNo);
+  noBtn.addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    dodgeNo();
+  }, { passive: false });
+
+  yesBtn.addEventListener("click", () => {
+    finalMessage.textContent = PERSONALIZATION.finalSection.yesMessage;
   });
 }
 
-document.getElementById("replay-letter").addEventListener("click", runTypewriter);
 renderStaticContent();
 setupSlideDeck();
+setupLetterReveal();
 setupReasons();
 setupMapAndQuiz();
 setupCountdownAndFinal();
